@@ -83,7 +83,11 @@ sessions as (
     ga_session_id,
     user_pseudo_id,
     MIN(event_date) as date,
+    MAX(event_name) as event_name_max,
+    MIN(event_name) as event_name_min,
+
     MAX(landing_page) as landing_page,
+    MIN(landing_page) as landing_page_min,
     
     MIN(user_first_touch_ts) as user_first_touch_ts,
     MAX(utm_medium) as utm_medium,
@@ -104,6 +108,7 @@ sessions as (
     MAX(browser) as browser,
     MAX(browser_version) as browser_version
   FROM event_aggregated
+  WHERE event_name = "session_start"
   GROUP BY 1,2
   ORDER BY date DESC
 )
